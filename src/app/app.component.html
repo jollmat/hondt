@@ -1,0 +1,33 @@
+<ng-container *ngIf="partits">
+  <div class="d-flex w-100">
+    
+    <div class="d-flex flex-column p-2 w-25">
+      <div>Partits: {{partits.length}}</div>
+
+      <ng-container *ngFor="let partit of partits; let idx = index">
+        <ng-container [ngTemplateOutlet]="partitTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}"></ng-container>
+      </ng-container>
+    </div>
+
+    <div class="d-flex w-75">
+
+    </div>
+
+  </div>
+</ng-container>
+
+<ng-template let-index="index" let-partit="partit" #partitTemplate>
+  <div class="d-flex justify-content-start align-items-center w-100" (click)="toggleExpanded(index)">
+    <i *ngIf="partit.color?.length>0" class="fas fa-circle me-2" style="color:{{partit.color}}"></i>
+    <i *ngIf="!partit.color || partit.color.length===0" class="far fa-circle me-2"></i>
+    <span>{{partit.nom}}</span>
+  </div>
+  <div class="d-flex flex-column w-100 mb-2" *ngIf="expanded.includes(index)">
+      <ng-container *ngFor="let persona of partit.llista; let num = index;">
+        <div class="d-flex justify-content-start align-items-center ms-1" style="border-left:1px solid {{partit.color}}">
+          <div style="width:20px;color:{{partit.color}}" class="text-end me-2">{{num+1}}</div>
+          <div class="persona">{{persona}}</div>
+        </div>
+      </ng-container>
+  </div>
+</ng-template>
