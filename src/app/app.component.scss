@@ -1,8 +1,40 @@
+.bb-1 { border-bottom: 1px solid #ccc; }
+
+.partit {
+    border-bottom: 1px solid #ccc;
+}
+
 .persona {
     color: #666;
     &:hover {
         font-style: normal;
         color: #333;
         cursor: default;
+    }
+    &.regidor {
+        font-weight: 500;
+    }
+    &.no-regidor {
+        text-decoration: line-through;
+        opacity: .6;
+    }
+}
+
+input {
+    &.form-control {
+        width: 100px;
+        text-align: end;
+        font-size: 12px;
+    }
+}
+
+.percent {
+    color: #888;
+    width:55px;
+}
+.regidors {
+    gap: 4px;
+    i {
+        font-size: 14px;
     }
 }
