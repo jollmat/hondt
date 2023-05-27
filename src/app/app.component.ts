@@ -9,6 +9,9 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
+  STORED_HONDT_DATA: string = 'HONDT_DATA';
+
   title: string = 'Escrutini/resultats eleccions';
 
   partitsUpdate$ = new Subject<string>();
@@ -29,6 +32,16 @@ export class AppComponent implements OnInit {
       });
   }
 
+  sortBy(attr: string) {
+    this.partits = this.partits.sort((a, b) => {
+      if(attr==='nom'){
+        return a.nom>=b.nom ? 1 : -1;
+      } else {
+        return a.vots>=b.vots ? -1 : 1;
+      }
+    });
+  }
+
   toggleExpanded(idx: number) {
     if (this.expanded.includes(idx)) {
       this.expanded = this.expanded.filter((_idx) => _idx!==idx );
@@ -46,6 +59,7 @@ export class AppComponent implements OnInit {
   }
 
   updatePartits() {
+    localStorage.setItem(this.STORED_HONDT_DATA, JSON.stringify(this.partits));
     this.partitsUpdate$.next(JSON.stringify(this.partits));
   }
 
@@ -101,10 +115,21 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.partitsService.partits$.subscribe((_partits) => {
-      this.partits = _partits;
-      this.configHondtMatrix();
-    });
-    this.partitsService.loadPartits();
+
+    const storedDataStr: string | null = localStorage.getItem(this.STORED_HONDT_DATA);
+    const storedData: PartitInterface[] = [];
+
+    if (storedDataStr && storedDataStr.length>0) {
+       this.partits = JSON.parse(storedDataStr) as PartitInterface[];
+       this.configHondtMatrix();
+       this.calculateHondt();
+    } else {
+      this.partitsService.partits$.subscribe((_partits) => {
+        this.partits = _partits;
+        this.configHondtMatrix();
+      });
+      this.partitsService.loadPartits();
+    }
+    
   }
 }

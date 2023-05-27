@@ -7,7 +7,16 @@
         <span class="mx-2">/</span>
         <span>Vots: {{getTotalVots()}}</span>
       </div>
-      <h5 class="mb-1 py-1 bb-1">Partits/coalicions ({{partits.length}})</h5>
+
+      <div class="d-flex justify-content-between w-100 mb-1 py-1 bb-1">
+        <h5 class="">Partits/coalicions ({{partits.length}})</h5>
+        <div>
+          <span class="me-1">Ordena per</span>
+          <button class="btn btn-sm btn-link px-1" (click)="sortBy('vots')">Vots</button>
+          <button class="btn btn-sm btn-link px-1" (click)="sortBy('nom')">Partit</button>
+        </div>
+      </div>
+      
       <ng-container *ngFor="let partit of partits; let idx = index">
         <ng-container [ngTemplateOutlet]="partitTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}"></ng-container>
       </ng-container>
@@ -19,18 +28,20 @@
 <ng-template let-index="index" let-partit="partit" #partitTemplate>
 
   <div class="d-flex flex-column partit w-100">
-    <div class="d-flex justify-content-between align-items-top pt-1 pb-2 w-100">
+    <div class="d-flex flex-wrap justify-content-between align-items-top pt-1 pb-2 w-100">
 
-      <div class="d-flex flex-wrap justify-content-start align-items-center mt-1">
-        <i *ngIf="partit.color?.length>0" class="fas fa-circle me-2 mt-1" style="color:{{partit.color}}"></i>
-        <i *ngIf="!partit.color || partit.color.length===0" class="far fa-circle me-2 mt-1"></i>
-        <span class="cursor-pointer" (click)="toggleExpanded(index)">{{partit.nom}}</span>
+      <div class="d-flex flex-column flex-wrap justify-content-start align-items-start mt-1 w-100">
+        <div class="d-flex justify-content-start align-items-center">
+          <i *ngIf="partit.color?.length>0" class="fas fa-circle me-2 mt-1" style="color:{{partit.color}}"></i>
+          <i *ngIf="!partit.color || partit.color.length===0" class="far fa-circle me-2 mt-1"></i>
+          <span class="cursor-pointer" (click)="toggleExpanded(index)" [title]="partit.nom">{{partit.nom}}</span>
+        </div>
         <ng-container [ngTemplateOutlet]="regidorsTemplate" [ngTemplateOutletContext]="{partit: partit}"></ng-container>
       </div>
       
       <div class="d-flex justify-content-start align-items-center ms-2">
         <input type="number" class="form-control px-2 py-1 ms-3 mt-1" style="height: fit-content;" [(ngModel)]="partit.vots" value="{{partit.vots}}" (ngModelChange)="updatePartits()">
-        <div class="percent ms-2 text-end" *ngIf="getTotalVots()>0">{{((partit.vots*100)/getTotalVots()) | number : '1.2-2'}}%</div>
+        <div class="percent m-0 text-end" *ngIf="getTotalVots()>0">{{((partit.vots*100)/getTotalVots()) | number : '1.2-2'}}%</div>
       </div>
 
     </div>
@@ -48,7 +59,8 @@
 </ng-template>
 
 <ng-template let-partit="partit" #regidorsTemplate>
-  <div class="regidors d-flex flex-wrap justify-content-start align-items-center ms-3 mt-1 px-2">
+  <div class="regidors d-flex flex-wrap justify-content-start align-items-center ms-3 my-1 px-2">
     <i class="fas fa-user" style="color:{{partit.color}}" *ngFor="let regidor of getNumRegidorsEnumeration(getNumRegidors(partit))"></i>
+    <span class="ms-1">({{getNumRegidors(partit)}})</span>
   </div>
 </ng-template>
