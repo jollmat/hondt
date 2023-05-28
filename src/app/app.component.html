@@ -26,7 +26,8 @@
         </div>
       </div>
       
-      <div *ngIf="vista==='ESCRUTINI'" class="partits d-flex flex-wrap justify-content-between w-100" [dragula]="'PARTITS'" [(dragulaModel)]="partits">
+      <!-- <div *ngIf="vista==='ESCRUTINI'" class="partits d-flex flex-wrap justify-content-between w-100" [dragula]="'PARTITS'" [(dragulaModel)]="partits"> -->
+        <div *ngIf="vista==='ESCRUTINI'" class="partits d-flex flex-wrap justify-content-between w-100"></div>
         <ng-container *ngFor="let partit of partits; let idx = index">
           <ng-container [ngTemplateOutlet]="partitTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}"></ng-container>
         </ng-container>
