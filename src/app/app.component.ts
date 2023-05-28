@@ -15,6 +15,10 @@ export class AppComponent implements OnInit {
 
   title: string = 'Escrutini/resultats eleccions';
 
+  showConfig: boolean = true;
+  percentExclusio: number = 5;
+  votsEnBlanc: number = 0;
+
   partitsUpdate$ = new Subject<string>();
   partits!: PartitInterface[];
   regidors: number = 21;
@@ -68,6 +72,7 @@ export class AppComponent implements OnInit {
 
   getTotalVots() {
     let vots: number = 0;
+    vots+=this.votsEnBlanc;
     this.partits.forEach((_partit) => {
       vots+=Number(_partit.vots);
     });
