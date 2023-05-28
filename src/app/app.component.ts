@@ -110,7 +110,7 @@ export class AppComponent implements OnInit {
     if(this.getTotalVots()>0) {
       this.hondtData.forEach((_hondtPartit) => {
         const partit: PartitInterface | undefined = this.partits.find((_partit) => _partit.sigles===_hondtPartit.sigles );
-        if (partit) {
+        if (partit && partit.vots>=((5*this.getTotalVots())/100)) {
           for(let i=0;i<this.regidors;i++) {
             const vots: number = partit.vots/(i+1);
             _hondtPartit.data[i] = vots;
