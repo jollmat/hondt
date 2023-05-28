@@ -14,7 +14,7 @@
     .partit {
         border: 1px solid #ccc;
         width: calc((25%) - 10px);
-        min-width: 200px;
+        width: 200px;
         border-radius: 4px;
         background-color: whitesmoke;
     }
@@ -73,12 +73,16 @@ fieldset {
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 400px) {
     /* For mobile phones: */
     .partit {
         border: 1px solid #ccc;
         width: calc(100%) !important;
         border-radius: 4px;
         background-color: whitesmoke;
+    }
+
+    .pactometre {
+        width: calc(100%) !important;
     }
 }
