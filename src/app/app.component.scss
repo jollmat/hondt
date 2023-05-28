@@ -1,5 +1,9 @@
 .bb-1 { border-bottom: 1px solid #ccc; }
 
+.general-info{
+    font-size: 10px;
+}
+
 .partits {
     gap: 5px;
     .partit {
@@ -8,6 +12,16 @@
         min-width: 200px;
         border-radius: 4px;
         background-color: whitesmoke;
+    }
+}
+
+.pactometre-container {
+    gap: 5px;
+    .pactometre {
+        border-radius: 4px;
+        border: 1px dotted #ccc;
+        min-width: 200px;
+        min-height: 100px;
     }
 }
 
@@ -43,6 +57,14 @@ input {
     gap: 4px;
     i {
         font-size: 14px;
+    }
+}
+
+fieldset {
+    min-width: 200px;
+    legend {
+        font-size: 14px;
+        color: #888;
     }
 }
 

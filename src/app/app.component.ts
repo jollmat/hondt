@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
   partitsUpdate$ = new Subject<string>();
   partits!: PartitInterface[];
   regidors: number = 21;
+  partitsGovern: PartitInterface[] = [];
+  partitsOposicio: PartitInterface[] = [];
 
   expanded: number[] = [];
 
@@ -25,6 +27,8 @@ export class AppComponent implements OnInit {
   hondtDataRank: {sigles: string, vots: number}[] = [];
 
   dragDropSubs = new Subscription();
+
+  vista: 'ESCRUTINI' | 'PACTOMETRE' = 'ESCRUTINI';
 
   constructor(
     private partitsService: PartitsService,

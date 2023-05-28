@@ -2,24 +2,61 @@
   <div class="d-flex w-100">
     
     <div class="d-flex flex-column p-2 w-100">
-      <div class="d-flex justify-content-start align-items-center mb-1 w-100">
-        <span>Regidors: {{regidors}}</span>
-        <span class="mx-2">/</span>
-        <span>Vots: {{getTotalVots()}}</span>
+      <div class="d-flex justify-content-between align-items-center mb-1 w-100">
+        <div class="general-info d-flex justify-content-start align-items-center">
+          <span>Regidors: {{regidors}}</span>
+          <span class="mx-2">/</span>
+          <span>Partits: {{partits.length}}</span>
+          <span class="mx-2">/</span>
+          <span>Vots: {{getTotalVots()}}</span>
+        </div>
+        <div class="d-flex justify-content-end align-items-center">
+          <button class="btn btn-sm" [ngClass]="{'active':vista==='ESCRUTINI'}" (click)="vista='ESCRUTINI'">Escrutini</button>
+          <button class="btn btn-sm ms-1" [ngClass]="{'active':vista==='PACTOMETRE', disabled:getTotalVots()===0}" (click)="vista='PACTOMETRE'">Pactòmetre</button>
+        </div>
       </div>
 
       <div class="d-flex justify-content-between w-100 mb-1 py-1">
-        <h6 class="">Partits/coalicions ({{partits.length}})</h6>
-        <div class="d-flex justify-content-end align-items-center">
+
+        <h6 *ngIf="vista==='ESCRUTINI'" class="">Escrutini</h6>
+        <h6 *ngIf="vista==='PACTOMETRE'" class="">Pactòmetre</h6>
+        
+        <div *ngIf="vista==='ESCRUTINI'" class="d-flex justify-content-end align-items-center">
           <button class="btn btn-sm btn-link px-1" (click)="sortBy('vots')" title="Actualitza ordre segons vots"><i class="fas fa-rotate"></i></button>
         </div>
       </div>
       
-      <div class="partits d-flex flex-wrap justify-content-between w-100" [dragula]="'PARTITS'" [(dragulaModel)]="partits">
+      <div *ngIf="vista==='ESCRUTINI'" class="partits d-flex flex-wrap justify-content-between w-100" [dragula]="'PARTITS'" [(dragulaModel)]="partits">
         <ng-container *ngFor="let partit of partits; let idx = index">
           <ng-container [ngTemplateOutlet]="partitTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}"></ng-container>
         </ng-container>
       </div>
+
+      <div *ngIf="vista==='PACTOMETRE'" class="d-flex flex-column w-100 pactometre-container">
+
+        <div class="pactometre d-flex flex-wrap justify-content-start w-100" [dragula]="'PARTITS2'">
+          <ng-container *ngFor="let partit of partits; let idx = index">
+            <ng-container [ngTemplateOutlet]="partitPactometreTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}" *ngIf="getNumRegidors(partit)>0"></ng-container>
+          </ng-container>
+        </div>
+
+        <div class="d-flex w-100 flex-wrap" style="gap:0px;">
+          <fieldset class="w-50">
+            <legend>Govern</legend>
+            <div class="pactometre d-flex flex-column flex-wrap justify-content-between w-100" placeholder="'Govern'" [dragula]="'PARTITS2'">
+         
+            </div>
+          </fieldset>
+          
+          <fieldset class="w-50">
+            <legend>Oposició</legend>
+            <div class="pactometre d-flex flex-column flex-wrap justify-content-between w-100" placeholder="'Oposició'" [dragula]="'PARTITS2'">
+              
+            </div>
+          </fieldset>
+        </div>
+        
+      </div>      
       
     </div>
 
@@ -60,6 +97,37 @@
         </div>
       </ng-container>
     </div>
+  </div>
+  
+</ng-template>
+
+<ng-template let-index="index" let-partit="partit" #partitPactometreTemplate>
+
+  <div class="d-flex flex-column partit p-2">
+    <div class="d-flex flex-wrap justify-content-between align-items-top pt-1 pb-2 w-100">
+
+      <div class="d-flex flex-column flex-wrap justify-content-start align-items-start mt-1 w-100">
+        <div class="d-flex justify-content-start align-items-center">
+          <i *ngIf="partit.color?.length>0" class="fas fa-circle me-2 mt-1" style="color:{{partit.color}}"></i>
+          <i *ngIf="!partit.color || partit.color.length===0" class="far fa-circle me-2 mt-1"></i>
+          <span class="cursor-pointer" (click)="toggleExpanded(index)" [title]="partit.nom">{{partit.nom}} ({{getNumRegidors(partit)}})</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!--
+    <div class="d-flex flex-column mb-2 w-100">
+      <ng-container *ngFor="let persona of partit.llista; let num = index;">
+        <ng-container *ngIf=" (num+1)<=getNumRegidors(partit)">
+          <div class="d-flex justify-content-start align-items-center" style="margin-left: 5px;border-left:1px solid {{partit.color}}">
+            <div style="width:20px;color:{{partit.color}}" class="text-end mx-2">{{num+1}}</div>
+            <div class="persona" [title]="persona">{{persona}}</div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+    -->
   </div>
   
 </ng-template>
