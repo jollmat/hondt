@@ -1,7 +1,14 @@
 .bb-1 { border-bottom: 1px solid #ccc; }
 
-.partit {
-    border-bottom: 1px solid #ccc;
+.partits {
+    gap: 5px;
+    .partit {
+        border: 1px solid #ccc;
+        width: calc((25%) - 10px);
+        min-width: 200px;
+        border-radius: 4px;
+        background-color: whitesmoke;
+    }
 }
 
 .persona {
@@ -36,5 +43,15 @@ input {
     gap: 4px;
     i {
         font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .partit {
+        border: 1px solid #ccc;
+        width: calc(100%) !important;
+        border-radius: 4px;
+        background-color: whitesmoke;
     }
 }

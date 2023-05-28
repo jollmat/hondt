@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PartitInterface } from './model/interfaces/partit.interface';
 import { PartitsService } from './services/partits.service';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'app-root',
@@ -23,13 +24,23 @@ export class AppComponent implements OnInit {
   hondtData: {sigles: string, data: number[]}[] = [];
   hondtDataRank: {sigles: string, vots: number}[] = [];
 
-  constructor(private partitsService: PartitsService){
+  dragDropSubs = new Subscription();
+
+  constructor(
+    private partitsService: PartitsService,
+    private dragulaService: DragulaService){
     this.partitsUpdate$.pipe(
       debounceTime(600),
       distinctUntilChanged())
       .subscribe(value => {
         this.calculateHondt();
       });
+
+    this.dragDropSubs.add(this.dragulaService.drop("PARTITS")
+      .subscribe(({ name, el, target, source, sibling }) => {
+       localStorage.setItem(this.STORED_HONDT_DATA, JSON.stringify(this.partits));
+      })
+    );
   }
 
   sortBy(attr: string) {

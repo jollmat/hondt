@@ -8,18 +8,21 @@
         <span>Vots: {{getTotalVots()}}</span>
       </div>
 
-      <div class="d-flex justify-content-between w-100 mb-1 py-1 bb-1">
-        <h5 class="">Partits/coalicions ({{partits.length}})</h5>
-        <div>
+      <div class="d-flex justify-content-between w-100 mb-1 py-1">
+        <h6 class="">Partits/coalicions ({{partits.length}})</h6>
+        <div class="d-flex justify-content-end align-items-center">
           <span class="me-1">Ordena per</span>
           <button class="btn btn-sm btn-link px-1" (click)="sortBy('vots')">Vots</button>
           <button class="btn btn-sm btn-link px-1" (click)="sortBy('nom')">Partit</button>
         </div>
       </div>
       
-      <ng-container *ngFor="let partit of partits; let idx = index">
-        <ng-container [ngTemplateOutlet]="partitTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}"></ng-container>
-      </ng-container>
+      <div class="partits d-flex flex-wrap justify-content-between w-100" [dragula]="'PARTITS'" [(dragulaModel)]="partits">
+        <ng-container *ngFor="let partit of partits; let idx = index">
+          <ng-container [ngTemplateOutlet]="partitTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}"></ng-container>
+        </ng-container>
+      </div>
+      
     </div>
 
   </div>
@@ -27,7 +30,7 @@
 
 <ng-template let-index="index" let-partit="partit" #partitTemplate>
 
-  <div class="d-flex flex-column partit w-100">
+  <div class="d-flex flex-column partit p-2">
     <div class="d-flex flex-wrap justify-content-between align-items-top pt-1 pb-2 w-100">
 
       <div class="d-flex flex-column flex-wrap justify-content-start align-items-start mt-1 w-100">
@@ -36,7 +39,7 @@
           <i *ngIf="!partit.color || partit.color.length===0" class="far fa-circle me-2 mt-1"></i>
           <span class="cursor-pointer" (click)="toggleExpanded(index)" [title]="partit.nom">{{partit.nom}}</span>
         </div>
-        <ng-container [ngTemplateOutlet]="regidorsTemplate" [ngTemplateOutletContext]="{partit: partit}"></ng-container>
+        <ng-container *ngIf="partit.vots && getNumRegidors(partit)>0" [ngTemplateOutlet]="regidorsTemplate" [ngTemplateOutletContext]="{partit: partit}"></ng-container>
       </div>
       
       <div class="d-flex justify-content-start align-items-center ms-2">
