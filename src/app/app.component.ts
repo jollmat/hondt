@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
         return a.vots>=b.vots ? -1 : 1;
       }
     });
+    localStorage.setItem(this.STORED_HONDT_DATA, JSON.stringify(this.partits));
   }
 
   toggleExpanded(idx: number) {
