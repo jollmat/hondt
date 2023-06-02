@@ -2,9 +2,10 @@
     {
         "nom": "CIUTADANS PARTIDO DE LA CIUDADANIA",
         "sigles": "CS",
-        "color": "orange",
+        "color": "white",
+        "bgColor": "orange",
         "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Logo_oficial_Ciudadanos.svg/518px-Logo_oficial_Ciudadanos.svg.png",
-        "vots": 0,
+        "vots": 114,
         "llista": [
             "Antonio Medialdea Huete",
             "Alexeis Bravo Mourente",
@@ -32,9 +33,10 @@
     {
         "nom": "CONVERGENTS PER SITGES - ARA PACTE LOCAL",
         "sigles": "CNV - ARA PL",
-        "color": "#045cb4",
+        "color": "white",
+        "bgColor": "#045cb4",
         "logo": "https://www.convergents.org/wp-content/uploads/2023/02/cropped-logo-bo-uai-258x258-removebg-preview-98x51.png",
-        "vots": 0,
+        "vots": 31,
         "llista": [
             "Carmen Dolores Sánchez González",
             "Jaume Solé Batet",
@@ -62,9 +64,10 @@
     {
         "nom": "ESQUERRA REPUBLICANA DE CATALUNYA - ACORD MUNICIPAL",
         "sigles": "ERC - AM",
-        "color": "#ffdf4f",
+        "color": "#000000",
+        "bgColor": "#ffdf4f",
         "logo": "",
-        "vots": 0,
+        "vots": 1666,
         "llista": [
             "Aurora Carbonell Abella",
             "Albert Oliver - Rodés Sen (Independent)",
@@ -92,9 +95,10 @@
     {
         "nom": "FETS PER SITGES",
         "sigles": "FETS PER SITGES",
-        "color": "#C3DE5D",
+        "color": "#000000",
+        "bgColor": "#C3DE5D",
         "logo": "https://www.fetspersitges.cat/wp-content/uploads/2022/10/fets-300x100.jpg",
-        "vots": 0,
+        "vots": 666,
         "llista": [
             "Ignacio (Nacho) Rubi Gonzalez",
             "Silvia Perez Fuste",
@@ -122,9 +126,10 @@
     {
         "nom": "GUANYEM SITGES - ALTERNATIVA MUNICIPALISTA",
         "sigles": "GSAMUNT",
-        "color": "#d51e73",
+        "color": "#ffffff",
+        "bgColor": "#d51e73",
         "logo": "http://guanyemsitges.cat/wp-content/uploads/2019/01/logo_guanyem.png",
-        "vots": 0,
+        "vots": 722,
         "llista": [
             "Lorena Lucas Sánchez",
             "Josep Maria Tubau Llorià (CUP)",
@@ -152,9 +157,10 @@
     {
         "nom": "JUNTS PER SITGES - COMPROMÍS MUNICIPAL",
         "sigles": "CM",
-        "color": "rgb(0, 196, 178)",
+        "color": "#ffffff",
+        "bgColor": "rgb(0, 196, 178)",
         "logo": "",
-        "vots": 0,
+        "vots": 1875,
         "llista": [
             "Mónica Gallardo Montornés",
             "Rosa Tubau Lloria",
@@ -182,9 +188,10 @@
     {
         "nom": "PARTIDO POPULAR/PARTIT POPULAR",
         "sigles": "PP",
-        "color": "#17589D",
+        "color": "#ffffff",
+        "bgColor": "#17589D",
         "logo": "https://www.pp.es/sites/all/themes/partidopopular/images/logotipo.png",
-        "vots": 0,
+        "vots": 649,
         "llista": [
             "Eva Garcia Rodriguez",
             "Sergio Porron Mendez",
@@ -212,9 +219,10 @@
     {
         "nom": "PARTIT DELS SOCIALISTES DE CATALUNYA - MARGALLÓ X SITGES - CANDIDATURA DE PROGRÉS",
         "sigles": "PSC-MARGALLÓ X SITGES-CP",
-        "color": "#E10919",
+        "color": "#ffffff",
+        "bgColor": "#E10919",
         "logo": "https://www.socialistes.cat/wp-content/uploads/2022/02/image-4.png",
-        "vots": 0,
+        "vots": 1616,
         "llista": [
             "Luis Miguel Garcia Alcaraz",
             "Elisabeth Perez Ribas",
@@ -242,9 +250,10 @@
     {
         "nom": "SITGES GRUP INDEPENDENT",
         "sigles": "SITGES GI",
-        "color": "rgb(1, 149, 254)",
+        "color": "#ffffff",
+        "bgColor": "rgb(1, 149, 254)",
         "logo": "https://www.sitgesgi.com/logo-blue.svg",
-        "vots": 0,
+        "vots": 1212,
         "llista": [
             "David Martinez Lluis",
             "Eva Maria Martin Martinez (Independent)",
@@ -272,9 +281,10 @@
     {
         "nom": "SOLUCIONS-EL PARTIT DE TOTS",
         "sigles": "SOLUCIONSPDeTOTS",
-        "color": "brown",
+        "color": "white",
+        "bgColor": "brown",
         "logo": "",
-        "vots": 0,
+        "vots": 258,
         "llista": [
             "Ferran Llombart Guilabert",
             "Samuel Meyer Allain Abitbol",
@@ -302,9 +312,10 @@
     {
         "nom": "VALENTS",
         "sigles": "VALENTS",
-        "color": "rgb(8, 15, 64)",
+        "color": "#ffffff",
+        "bgColor": "rgb(8, 15, 64)",
         "logo": "",
-        "vots": 0,
+        "vots": 332,
         "llista": [
             "Manuel Rodríguez de l'Hotellerie de Fallois",
             "Jose Diego Tendero Rebollo",
@@ -332,9 +343,10 @@
     {
         "nom": "VERDS EN COMÚ PODEM SITGES - CONFLUÈNCIA",
         "sigles": "VECPS - C",
-        "color": "rgb(102, 36, 131)",
+        "color": "#ffffff",
+        "bgColor": "rgb(102, 36, 131)",
         "logo": "https://encomupodem.cat/content/uploads/2021/01/cropped-logo.png",
-        "vots": 0,
+        "vots": 930,
         "llista": [
             "María del Carmen Gasulla Blanco",
             "Brandon Jones",
@@ -362,9 +374,10 @@
     {
         "nom": "VOX",
         "sigles": "VOX",
-        "color": "rgb(124, 189, 42)",
+        "color": "white",
+        "bgColor": "rgb(124, 189, 42)",
         "logo": "https://www.voxespana.es/wp-content/uploads/2019/02/logo-vox-espana.png",
-        "vots": 0,
+        "vots": 713,
         "llista": [
             "José Antonio Gilabert Delgado",
             "Mónica Soria Verdión",

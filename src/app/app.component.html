@@ -10,21 +10,6 @@
           <span class="mx-2">|</span>
           <span>% exclusió: {{percentExclusio}}</span>
 
-          <!--
-          <i class="fas fa-sliders me-2" (click)="showConfig=!showConfig"></i>
-          <div [hidden]="!showConfig">
-            <ul>
-              <li>
-                <div class="d-flex justify-content-between align-items-center">
-                  <span>Regidors</span>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <span>% exclusió</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-          -->
         </div>
         <div class="d-flex justify-content-end align-items-center">
           <button class="btn btn-sm" [ngClass]="{'active':vista==='ESCRUTINI'}" (click)="vista='ESCRUTINI'">Escrutini</button>
@@ -48,43 +33,41 @@
           <span>En blanc</span>
           <input type="number"
             placeholder="En blanc"
-            class="form-control px-2 py-1 ms-1 me-2" 
+            class="form-control px-2 py-1 ms-2 me-2" 
             style="height: fit-content;"
             [(ngModel)]="votsEnBlanc" value="{{votsEnBlanc}}" 
             (ngModelChange)="updatePartits()">
-          <button class="btn btn-sm btn-link px-1" (click)="sortBy('vots')" title="Actualitza ordre segons vots"><i class="fas fa-rotate"></i></button>
+          <!-- <button class="btn btn-sm btn-link px-1" (click)="sortBy('vots')" title="Actualitza ordre segons vots"><i class="fas fa-rotate"></i></button> -->
         </div>
       </div>
       
       <!-- <div *ngIf="vista==='ESCRUTINI'" class="partits d-flex flex-wrap justify-content-between w-100" [dragula]="'PARTITS'" [(dragulaModel)]="partits"> -->
-      <div *ngIf="vista==='ESCRUTINI'" class="partits d-flex flex-wrap justify-content-between w-100">
+      <div *ngIf="vista==='ESCRUTINI'" class="partits d-flex flex-wrap justify-content-start w-100">
         <ng-container *ngFor="let partit of partits; let idx = index">
           <ng-container [ngTemplateOutlet]="partitTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}"></ng-container>
         </ng-container>
       </div>
 
-      <div *ngIf="vista==='PACTOMETRE'" class="d-flex flex-column w-100 pactometre-container">
+      <div *ngIf="vista==='PACTOMETRE'" class="d-flex w-100 pactometre-container">
 
-        <div class="pactometre d-flex flex-wrap justify-content-start w-100" [dragula]="'PARTITS2'">
-          <ng-container *ngFor="let partit of partits; let idx = index">
-            <ng-container [ngTemplateOutlet]="partitPactometreTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}" *ngIf="getNumRegidors(partit)>0"></ng-container>
-          </ng-container>
-        </div>
+       <div class="d-flex justify-content-between align-items-start w-100" style="gap:5px;">
+          <fieldset class="w-50 flex-grow-1">
+            <legend>Partits</legend>
+            <div class="pactometre d-flex flex-column flex-wrap justify-content-start w-100" [dragula]="'PARTITS2'">
+              <ng-container *ngFor="let partit of partits; let idx = index">
+                <ng-container [ngTemplateOutlet]="partitPactometreTemplate" [ngTemplateOutletContext]="{partit: partit, index: idx}" *ngIf="getNumRegidors(partit)>0"></ng-container>
+              </ng-container>
+            </div>
+          </fieldset>
 
-        <div class="d-flex w-100 flex-wrap" style="gap:0px;">
-          <fieldset class="w-100">
+          <fieldset class="w-50 flex-grow-1">
             <legend>Govern</legend>
-            <div class="pactometre d-flex flex-column flex-wrap justify-content-between w-100 pb-3" placeholder="'Govern'" [dragula]="'PARTITS2'">
+            <div class="pactometre d-flex flex-column flex-wrap justify-content-start-100" [dragula]="'PARTITS2'">
          
             </div>
+            <div class="marcador d-flex px-2 justify-content-end w-100">Majoria</div>
           </fieldset>
-          
-          <fieldset class="w-100">
-            <legend>Oposició</legend>
-            <div class="pactometre d-flex flex-column flex-wrap justify-content-between w-100 pb-3" placeholder="'Oposició'" [dragula]="'PARTITS2'">
-              
-            </div>
-          </fieldset>
+                    
         </div>
         
       </div>      
@@ -101,8 +84,8 @@
 
       <div class="d-flex flex-column flex-wrap justify-content-start align-items-start mt-1 w-100">
         <div class="d-flex justify-content-start align-items-center">
-          <i *ngIf="partit.color?.length>0" class="fas fa-circle me-2 mt-1" style="color:{{partit.color}}"></i>
-          <i *ngIf="!partit.color || partit.color.length===0" class="far fa-circle me-2 mt-1"></i>
+          <i *ngIf="partit.bgColor?.length>0" class="fas fa-circle me-2 mt-1" style="color:{{partit.bgColor}}"></i>
+          <i *ngIf="!partit.bgColor || partit.bgColor.length===0" class="far fa-circle me-2 mt-1"></i>
           <span class="cursor-pointer" (click)="toggleExpanded(index)" [title]="partit.nom">{{partit.nom}}</span>
         </div>
       </div>
@@ -124,8 +107,8 @@
   
     <div class="d-flex flex-column mb-2 w-100" *ngIf="expanded.includes(index)">
       <ng-container *ngFor="let persona of partit.llista; let num = index;">
-        <div class="d-flex justify-content-start align-items-center" style="margin-left: 5px;border-left:1px solid {{partit.color}}">
-          <div style="width:20px;color:{{partit.color}}" class="text-end mx-2">{{num+1}}</div>
+        <div class="d-flex justify-content-start align-items-center" style="margin-left: 5px;border-left:1px solid {{partit.bgColor}}">
+          <div style="width:20px;color:{{partit.bgColor}}" class="text-end mx-2">{{num+1}}</div>
           <div class="persona" [title]="persona" [ngClass]="{regidor: (num+1)<=getNumRegidors(partit), 'no-regidor': (getTotalVots()>0) && ((num+1)>getNumRegidors(partit))}">{{persona}}</div>
         </div>
       </ng-container>
@@ -136,38 +119,24 @@
 
 <ng-template let-index="index" let-partit="partit" #partitPactometreTemplate>
 
-  <div class="d-flex flex-column partit px-2 py-0">
-    <div class="d-flex flex-wrap justify-content-between align-items-top pt-1 pb-2 w-100">
+  <div class="d-flex flex-column partit w-100 p-0">
 
-      <div class="d-flex flex-column flex-wrap justify-content-start align-items-start mt-1 w-100">
-        <div class="d-flex justify-content-start align-items-center">
-          <i *ngIf="partit.color?.length>0" class="fas fa-circle me-2 mt-1" style="color:{{partit.color}}"></i>
-          <i *ngIf="!partit.color || partit.color.length===0" class="far fa-circle me-2 mt-1"></i>
-          <span class="cursor-pointer" (click)="toggleExpanded(index)" [title]="partit.nom">{{partit.nom}} ({{getNumRegidors(partit)}})</span>
-        </div>
-      </div>
-
-    </div>
-
-    <!--
-    <div class="d-flex flex-column mb-2 w-100">
-      <ng-container *ngFor="let persona of partit.llista; let num = index;">
-        <ng-container *ngIf=" (num+1)<=getNumRegidors(partit)">
-          <div class="d-flex justify-content-start align-items-center" style="margin-left: 5px;border-left:1px solid {{partit.color}}">
-            <div style="width:20px;color:{{partit.color}}" class="text-end mx-2">{{num+1}}</div>
-            <div class="persona" [title]="persona">{{persona}}</div>
-          </div>
-        </ng-container>
+    <ul class="pactometre-regidors p-0 m-0" [title]="partit.nom">
+      <ng-container *ngFor="let regidor of partit.llista;let idx=index;">
+        <li *ngIf="idx<getNumRegidors(partit)" class="ps-2 py-2 d-flex" style="background-color:{{partit.bgColor}};color:{{partit.color}};">
+           <!-- <div class="sigles fw-bold">{{partit.sigles}}</div> - <div class="regidor">{{regidor}}</div> -->
+           <div class="ps-0 pe-2">{{partit.sigles}} - {{regidor}}</div>
+        </li>
       </ng-container>
-    </div>
-    -->
+    </ul>
+
   </div>
   
 </ng-template>
 
 <ng-template let-partit="partit" #regidorsTemplate>
   <div class="regidors d-flex flex-wrap justify-content-start align-items-center ms-3 my-1 px-2">
-    <i class="fas fa-user" style="color:{{partit.color}}" *ngFor="let regidor of getNumRegidorsEnumeration(getNumRegidors(partit))"></i>
+    <i class="fas fa-user" style="color:{{partit.bgColor}}" *ngFor="let regidor of getNumRegidorsEnumeration(getNumRegidors(partit))"></i>
     <span class="ms-1">({{getNumRegidors(partit)}})</span>
   </div>
 </ng-template>

@@ -25,8 +25,7 @@
     .pactometre {
         border-radius: 4px;
         border: 1px dotted #ccc;
-        min-width: 200px;
-        min-height: 100px;
+        height: calc(21*34px)+2;
     }
 }
 
@@ -66,15 +65,44 @@ input {
 }
 
 fieldset {
-    min-width: 200px;
     legend {
         font-size: 14px;
         color: #888;
     }
+
+    .marcador {
+        position: relative;
+        border-top: 3px dotted #ccc;
+        top: -341px;
+        height:1px;
+        overflow: visible;
+        color: #ccc;
+    }
+}
+
+.partit-pactometre {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+ul.pactometre-regidors {
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.pactometre-regidors {
+    li {
+        div {
+            text-overflow: ellipsis;
+            overflow: hidden; 
+            max-width: 100%;
+            white-space: nowrap;
+        }
+    }
 }
 
 @media only screen and (max-width: 400px) {
-    /* For mobile phones: */
+    /* For mobile phones: 
     .partit {
         border: 1px solid #ccc;
         width: calc(100%) !important;
@@ -84,5 +112,17 @@ fieldset {
 
     .pactometre {
         width: calc(100%) !important;
+    }
+
+    */
+    .pactometre-regidors {
+        li {
+            div {
+                text-overflow: ellipsis;
+                overflow: hidden; 
+                max-width: 100%;
+                white-space: nowrap;
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ import { PartitInterface } from './model/interfaces/partit.interface';
 import { PartitsService } from './services/partits.service';
 import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,14 @@ import { DragulaService } from 'ng2-dragula';
 export class AppComponent implements OnInit {
 
   STORED_HONDT_DATA: string = 'HONDT_DATA';
+  STORED_HONDT_DATA_VERSION: string = 'STORED_HONDT_DATA_VERSION';
+  STORED_HONDT_DATA_EN_BLANC: string = 'STORED_HONDT_DATA_EN_BLANC';
 
   title: string = 'Escrutini/resultats eleccions';
 
   showConfig: boolean = true;
   percentExclusio: number = 5;
-  votsEnBlanc: number = 0;
+  votsEnBlanc: number = 159;
 
   partitsUpdate$ = new Subject<string>();
   partits!: PartitInterface[];
@@ -81,7 +84,9 @@ export class AppComponent implements OnInit {
 
   updatePartits() {
     localStorage.setItem(this.STORED_HONDT_DATA, JSON.stringify(this.partits));
+    localStorage.setItem(this.STORED_HONDT_DATA_EN_BLANC, JSON.stringify(this.votsEnBlanc));
     this.partitsUpdate$.next(JSON.stringify(this.partits));
+    this.calculateHondt();
   }
 
   getNumRegidors(partit: PartitInterface) {
@@ -136,21 +141,40 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    console.log('ngOnInit');
     const storedDataStr: string | null = localStorage.getItem(this.STORED_HONDT_DATA);
-    const storedData: PartitInterface[] = [];
+    const storedDataEnBlancStr: string | null = localStorage.getItem(this.STORED_HONDT_DATA_EN_BLANC);
+    const storedVersion: string | null = localStorage.getItem(this.STORED_HONDT_DATA_VERSION);
 
-    if (storedDataStr && storedDataStr.length>0) {
+    
+
+    if (storedVersion && parseInt(storedVersion)===environment.version && (storedDataStr && storedDataStr.length>0)) {
        this.partits = JSON.parse(storedDataStr) as PartitInterface[];
+       console.log(this.partits);
+
+       if(!storedDataEnBlancStr) {
+        localStorage.setItem(this.STORED_HONDT_DATA_EN_BLANC, this.votsEnBlanc.toString());
+      }
+      this.votsEnBlanc = (storedDataEnBlancStr) ? parseInt(storedDataEnBlancStr) : this.votsEnBlanc;
+
        this.configHondtMatrix();
        this.calculateHondt();
     } else {
       this.partitsService.partits$.subscribe((_partits) => {
         this.partits = _partits;
+        localStorage.setItem(this.STORED_HONDT_DATA, JSON.stringify(this.partits));
+        localStorage.setItem(this.STORED_HONDT_DATA_VERSION, JSON.stringify(environment.version));
+        console.log(this.partits);
+
+        if(!storedDataEnBlancStr) {
+          localStorage.setItem(this.STORED_HONDT_DATA_EN_BLANC, this.votsEnBlanc.toString());
+        }
+        this.votsEnBlanc = (storedDataEnBlancStr) ? parseInt(storedDataEnBlancStr) : this.votsEnBlanc;
+
         this.configHondtMatrix();
+        this.calculateHondt();
       });
       this.partitsService.loadPartits();
-    }
-    
+    }    
   }
 }
