@@ -20,7 +20,8 @@ export class AppComponent implements OnInit {
 
   showConfig: boolean = true;
   percentExclusio: number = 5;
-  votsEnBlanc: number = 159;
+  votsEnBlancOriginal = 159;
+  votsEnBlanc: number = this.votsEnBlancOriginal;
 
   partitsUpdate$ = new Subject<string>();
   partits!: PartitInterface[];
@@ -84,7 +85,7 @@ export class AppComponent implements OnInit {
 
   updatePartits() {
     localStorage.setItem(this.STORED_HONDT_DATA, JSON.stringify(this.partits));
-    localStorage.setItem(this.STORED_HONDT_DATA_EN_BLANC, JSON.stringify(this.votsEnBlanc));
+    localStorage.setItem(this.STORED_HONDT_DATA_EN_BLANC, JSON.stringify(this.votsEnBlanc || this.votsEnBlancOriginal));
     this.partitsUpdate$.next(JSON.stringify(this.partits));
     this.calculateHondt();
   }
@@ -143,7 +144,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     console.log('ngOnInit');
     const storedDataStr: string | null = localStorage.getItem(this.STORED_HONDT_DATA);
-    const storedDataEnBlancStr: string | null = localStorage.getItem(this.STORED_HONDT_DATA_EN_BLANC);
+    let storedDataEnBlancStr: string | null = localStorage.getItem(this.STORED_HONDT_DATA_EN_BLANC);
     const storedVersion: string | null = localStorage.getItem(this.STORED_HONDT_DATA_VERSION);
 
     if (storedVersion && parseInt(storedVersion)===environment.version && (storedDataStr && storedDataStr.length>0)) {
@@ -152,8 +153,9 @@ export class AppComponent implements OnInit {
       });
        console.log(this.partits);
 
-       if(!storedDataEnBlancStr) {
-        localStorage.setItem(this.STORED_HONDT_DATA_EN_BLANC, this.votsEnBlanc.toString());
+       if(!storedDataEnBlancStr || storedDataEnBlancStr.trim().length===0) {
+        storedDataEnBlancStr = this.votsEnBlanc.toString();
+        localStorage.setItem(this.STORED_HONDT_DATA_EN_BLANC, storedDataEnBlancStr);
       }
       this.votsEnBlanc = (storedDataEnBlancStr) ? parseInt(storedDataEnBlancStr) : this.votsEnBlanc;
 
