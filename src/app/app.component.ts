@@ -146,10 +146,10 @@ export class AppComponent implements OnInit {
     const storedDataEnBlancStr: string | null = localStorage.getItem(this.STORED_HONDT_DATA_EN_BLANC);
     const storedVersion: string | null = localStorage.getItem(this.STORED_HONDT_DATA_VERSION);
 
-    
-
     if (storedVersion && parseInt(storedVersion)===environment.version && (storedDataStr && storedDataStr.length>0)) {
-       this.partits = JSON.parse(storedDataStr) as PartitInterface[];
+       this.partits = (JSON.parse(storedDataStr) as PartitInterface[]).sort((a, b) => {
+        return a.vots >= b.vots ? -1 : 1;
+      });
        console.log(this.partits);
 
        if(!storedDataEnBlancStr) {
@@ -161,7 +161,9 @@ export class AppComponent implements OnInit {
        this.calculateHondt();
     } else {
       this.partitsService.partits$.subscribe((_partits) => {
-        this.partits = _partits;
+        this.partits = _partits.sort((a, b) => {
+          return a.vots >= b.vots ? -1 : 1;
+        });
         localStorage.setItem(this.STORED_HONDT_DATA, JSON.stringify(this.partits));
         localStorage.setItem(this.STORED_HONDT_DATA_VERSION, JSON.stringify(environment.version));
         console.log(this.partits);

@@ -14,7 +14,7 @@
     .partit {
         border: 1px solid #ccc;
         width: calc((25%) - 10px);
-        width: 200px;
+        min-width: 270px;
         border-radius: 4px;
         background-color: whitesmoke;
     }
@@ -102,19 +102,10 @@ ul.pactometre-regidors {
 }
 
 @media only screen and (max-width: 400px) {
-    /* For mobile phones: 
+    /* For mobile phones: */
     .partit {
-        border: 1px solid #ccc;
-        width: calc(100%) !important;
-        border-radius: 4px;
-        background-color: whitesmoke;
-    }
-
-    .pactometre {
         width: calc(100%) !important;
     }
-
-    */
     .pactometre-regidors {
         li {
             div {
